@@ -35,7 +35,7 @@ export class AuthController {
 
   @Post('register')
   async register(
-    @Body() registerData: { email: string; password: string; name?: string },
+    @Body() registerData: { email: string; password: string; name: string },
   ) {
     try {
       const { email, password, name } = registerData;

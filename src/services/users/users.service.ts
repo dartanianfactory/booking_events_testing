@@ -12,27 +12,34 @@ export class UsersService {
   ) {}
 
   async validateUser(email: string, password: string) {
-    const user = (await this.prisma.user.findUnique({
+    const user = await this.prisma.user.findUnique({
       where: { email },
-    })) as UserType;
+    });
 
     if (user && (await bcrypt.compare(password, user.password))) {
-      return user;
+      return user as UserType;
     }
     return null;
   }
 
   login(user: UserType) {
+    const payload = {
+      id: user.id,
+      user_id: user.user_id,
+      email: user.email,
+      name: user.name,
+    };
+
     return {
-      access_token: this.jwtService.sign(user),
+      access_token: this.jwtService.sign(payload),
       user,
     };
   }
 
-  async register(email: string, password: string, name?: string) {
-    const existingUser = (await this.prisma.user.findUnique({
+  async register(email: string, password: string, name: string) {
+    const existingUser = await this.prisma.user.findUnique({
       where: { email },
-    })) as UserType;
+    });
 
     if (existingUser) {
       throw new ConflictException('User with this email already exists');
@@ -40,21 +47,24 @@ export class UsersService {
 
     const hash = await bcrypt.hash(password, 12);
 
-    const user = (await this.prisma.user.create({
+    const user_id = `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
+    const user = await this.prisma.user.create({
       data: {
+        user_id,
         email,
         password: hash,
         name,
       },
-    })) as UserType;
+    });
 
     return user;
   }
 
   async findById(id: number) {
-    const user = (await this.prisma.user.findUnique({
+    const user = await this.prisma.user.findUnique({
       where: { id },
-    })) as UserType;
+    });
 
     if (!user) return null;
 

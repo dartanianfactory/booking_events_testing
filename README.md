@@ -9,6 +9,9 @@ $ npm install
 ## Compile and run the project
 
 ```bash
+# prisma genereted
+$ npx prisma genereted
+
 # init database BEFORE seed
 $ npx prisma migrate dev
 
@@ -41,6 +44,12 @@ $ npm run test:cov
 ```bash
 $ npm install -g @nestjs/mau
 $ mau deploy
+```
+
+## testing users
+
+```
+
 ```
 
 ## License

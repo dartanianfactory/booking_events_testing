@@ -29,7 +29,10 @@ export class SeedService {
     try {
       console.log('User seeder start!');
 
-      const hash = await bcrypt.hash('123123', 1993);
+      const hash = await bcrypt.hash(
+        '123123',
+        parseInt(process.env.PASSWORD_SOLT ?? '10'),
+      );
 
       await this.prisma.user.createMany({
         data: [

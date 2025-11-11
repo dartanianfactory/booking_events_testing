@@ -9,6 +9,12 @@ $ npm install
 ## Compile and run the project
 
 ```bash
+# init database BEFORE seed
+$ npx prisma migrate dev
+
+# seeding database BEFORE start
+$ npm run seed
+
 # development
 $ npm run start
 

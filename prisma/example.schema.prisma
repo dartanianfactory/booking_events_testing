@@ -1,0 +1,38 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output          = "../generated/prisma"
+}
+
+model User {
+  id         Int       @default(autoincrement()) @id
+  user_id    String?   
+  email      String    @unique
+  name       String?
+  bookings   Booking[] @relation(fields: [user_id], references: [id])
+  events     Event[]
+  created_at DateTime  @default(now())
+}
+
+model Event {
+  id          Int       @default(autoincrement()) @id
+  user        User      @relation(fields: [user_id], references: [id])
+  user_id     String?
+  name        String?
+  total_seats Int
+  Bookings    Booking[] @relation(fields: [event_id], references: [id])
+  created_at  DateTime  @default(now())
+}
+
+model Booking {
+  id         Int      @default(autoincrement()) @id
+  event      Event    @relation(fields: [event_id], references: [id])
+  user       User     @relation(fields: [user_id], references: [id])
+  event_id   Int
+  user_id    Int
+  created_at DateTime @default(now())
+}

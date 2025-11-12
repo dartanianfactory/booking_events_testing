@@ -36,7 +36,7 @@ export class BookingsController {
     } catch (error) {
       return {
         success: false,
-        message: error.message as string,
+        message: error.message,
       };
     }
   }
@@ -56,7 +56,7 @@ export class BookingsController {
     } catch (error) {
       return {
         success: false,
-        message: error.message as string,
+        message: error.message,
       };
     }
   }

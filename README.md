@@ -52,6 +52,35 @@ $ mau deploy
 
 ```
 
+## routes
+
+```
+{
+    /api/auth/login, POST
+}
+{
+    /api/auth/register, POST
+}
+{
+    /api/auth/me, GET
+}
+
+
+{
+    /api/bookings/reserve, POST
+}
+{
+    /api/bookings/my-bookings, GET
+}
+{
+    /api/bookings/event/:eventId, GET
+}
+{
+    /api/bookings/cancel/:bookingId, DELETE
+}
+
+```
+
 ## License
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
